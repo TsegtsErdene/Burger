@@ -4,7 +4,7 @@ import logoImage from "../../assets/image/burger-cheese-burger-food-icon-with-pn
 const Logo = () => {
   return (
     <div className={css.Logo}>
-      <img src={logoImage} />
+      <img alt="fuck you" src={logoImage} />
     </div>
   );
 };
