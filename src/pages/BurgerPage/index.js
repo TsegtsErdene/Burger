@@ -25,9 +25,23 @@ export class BurgerBuilder extends Component {
     totalPrice: 1000,
     purchasing: false,
     confirmOrder: false,
+    lastCustomerName: "N/A",
   };
-  demoChenger = (ug) => {
-    this.setState({ demo: ug });
+
+  componentDidMount = () => {
+    axios.get("/orders.json").then((response) => {
+      let arr = Object.entries(response.data);
+      arr = arr.reverse();
+      arr.forEach((el) => {});
+
+      const lastOrder = arr[arr.length - 1][1];
+
+      this.setState({
+        lastCustomerName: lastOrder.hayag.name,
+        ingredients: lastOrder.orts,
+        totalPrice: lastOrder.dun,
+      });
+    });
   };
 
   continueOrder = () => {
@@ -100,6 +114,7 @@ export class BurgerBuilder extends Component {
             ingredients={this.state.ingredients}
           />
         </Modal>
+        <p>Сүүлчийн захиалагч:{this.state.lastCustomerName}</p>
         <Burger
           orts={this.state.ingredients}
           demo={this.state.demo}

@@ -17,8 +17,6 @@ const Burger = (props) => {
       <BurgerIngredient type="bread-top" />
       {content}
       <BurgerIngredient type="bread-bottom" />
-
-      <button onClick={() => props.demoChenger("hehehehe")}>fuck</button>
     </div>
   );
 };
