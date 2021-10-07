@@ -20,10 +20,15 @@ export class BurgerBuilder extends Component {
       meat: 0,
     },
 
+    demo: "this is demo",
     totalPrice: 1000,
     purchasing: false,
     confirmOrder: false,
   };
+  demoChenger = (ug) => {
+    this.setState({ demo: ug });
+  };
+
   continueOrder = () => {
     console.log("continue daragdlaa...");
   };
@@ -81,7 +86,11 @@ export class BurgerBuilder extends Component {
             ingredients={this.state.ingredients}
           />
         </Modal>
-        <Burger orts={this.state.ingredients} />
+        <Burger
+          orts={this.state.ingredients}
+          demo={this.state.demo}
+          demoChenger={this.demoChenger}
+        />
         <BuildControls
           showConfirmModal={this.showConfirmModal}
           ingredientsNames={INGREDIENT_NAMES}

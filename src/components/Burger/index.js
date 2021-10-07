@@ -11,13 +11,14 @@ const Burger = (props) => {
       );
   });
 
-  if (content.length === 0)
-    content = <p>Хачиртай талхныхаа орцыг сонгоно уу...</p>;
+  if (content.length === 0) content = <p>{props.demo}</p>;
   return (
     <div className={css.Burger}>
       <BurgerIngredient type="bread-top" />
       {content}
       <BurgerIngredient type="bread-bottom" />
+
+      <button onClick={() => props.demoChenger("hehehehe")}>fuck</button>
     </div>
   );
 };
