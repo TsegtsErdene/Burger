@@ -5,8 +5,10 @@ const Menu = () => {
   return (
     <div>
       <ul className={css.Menu}>
-        <MenuItem>БУРГЕР</MenuItem>
-        <MenuItem>ЗАХИАЛАХ</MenuItem>
+        <MenuItem active link="/">
+          ШИНЭЗАХИАЛГА
+        </MenuItem>
+        <MenuItem link="/">НЭВТРЭХ</MenuItem>
       </ul>
     </div>
   );
