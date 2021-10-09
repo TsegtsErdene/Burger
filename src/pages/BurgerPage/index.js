@@ -4,6 +4,7 @@ import BuildControls from "../../components/BuildControls";
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
 import axios from "../../axios.orders";
+import Spinner from "../../components/General/Spinner";
 
 const INGREDIENT_PRICES = { salad: 150, cheese: 250, bacon: 800, meat: 1500 };
 const INGREDIENT_NAMES = {
@@ -25,40 +26,39 @@ export class BurgerBuilder extends Component {
     totalPrice: 1000,
     purchasing: false,
     confirmOrder: false,
-    lastCustomerName: "N/A",
   };
 
-  componentDidMount = () => {
-    axios.get("/orders.json").then((response) => {
-      let arr = Object.entries(response.data);
-      arr = arr.reverse();
-      arr.forEach((el) => {});
-
-      const lastOrder = arr[arr.length - 1][1];
-
-      this.setState({
-        lastCustomerName: lastOrder.hayag.name,
-        ingredients: lastOrder.orts,
-        totalPrice: lastOrder.dun,
-      });
-    });
-  };
+  componentDidMount = () => {};
 
   continueOrder = () => {
-    const order = {
-      orts: this.state.ingredients,
-      dun: this.state.totalPrice,
-      hayag: {
-        name: "Saraa",
-        city: "Ub",
-        street: "10r horoolol 23-12",
-      },
-    };
+    // const order = {
+    //   orts: this.state.ingredients,
+    //   dun: this.state.totalPrice,
+    //   hayag: {
+    //     name: "Saraa",
+    //     city: "Ub",
+    //     street: "10r horoolol 23-12",
+    //   },
+    // };
+    // this.setState({ loading: true });
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((response) => {})
+    //   .finally(() => {
+    //     this.setState({ loading: false });
+    //   });
+    const params = [];
 
-    axios.post("/orders.json", order).then((response) => {
-      alert("Amjilttai hadgalla");
+    for (let orts in this.state.ingredients) {
+      params.push(orts + "=" + this.state.ingredients[orts]);
+    }
+
+    const query = params.join("&");
+    this.props.history.push({
+      pathname: "ship",
+      search: query,
     });
-    console.log("continue daragdlaa...");
+    this.closeConfirmModal();
   };
 
   showConfirmModal = () => {
@@ -106,15 +106,19 @@ export class BurgerBuilder extends Component {
           closeConfirmModal={this.closeConfirmModal}
           show={this.state.confirmOrder}
         >
-          <OrderSummary
-            onCancel={this.closeConfirmModal}
-            onContinue={this.continueOrder}
-            price={this.state.totalPrice}
-            ingredientsNames={INGREDIENT_NAMES}
-            ingredients={this.state.ingredients}
-          />
+          {this.state.loading ? (
+            <Spinner />
+          ) : (
+            <OrderSummary
+              onCancel={this.closeConfirmModal}
+              onContinue={this.continueOrder}
+              price={this.state.totalPrice}
+              ingredientsNames={INGREDIENT_NAMES}
+              ingredients={this.state.ingredients}
+            />
+          )}
         </Modal>
-        <p>Сүүлчийн захиалагч:{this.state.lastCustomerName}</p>
+
         <Burger
           orts={this.state.ingredients}
           demo={this.state.demo}
